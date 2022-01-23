@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2'/promise);
 
 const db = mysql.createConnection(
     {
@@ -13,6 +13,7 @@ const db = mysql.createConnection(
     db.connect(function(err){
       if (err) throw err;
     })
+
 
     module.exports = db;
 

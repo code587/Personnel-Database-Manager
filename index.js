@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
-const mysql = require('mysql2');
-const db = require("./db");
+const mysql = require('mysql2/promise');
+const db = require('./db');
+require = ('console.table');
 
 startProgram();
 
@@ -26,94 +27,84 @@ async function startProgram() {
         case 'Add a department':
             addDepartment();
             break;
-        case 'Add a role':
-            addRole();
-            break;
-        case 'Add an employee':
-            addEmployee();
-            break;
-        case 'Update an employee role':
-            updateRole();
-            break;
-        case 'Done. Need nothing else.':
-            Finished();
-            break;
-        default:
-            break;
-    }
+        // case 'Add a role':
+        //     addRole();
+        //     break;
+    //     case 'Add an employee':
+    //         addEmployee();
+    //         break;
+    //     case 'Update an employee role':
+    //         updateRole();
+    //         break;
+    //     case 'Done. Need nothing else.':
+    //         Finished();
+    //         break;
+    //     default:
+    //         break;
+    // }
 }
 //appropriate function called based on the case fired up from the responses
 async function viewDepartments(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
-    const [rows, fields] = await connection.execute ('select * from departments;');
+    const [rows, fields] = await connection.execute ('select * from department;');
 
         console.table(rows);
+
     }
-    startProgram()
+    //startProgram()
 
-function viewEmployees(){
-db.findAllEmployees()
-.then(([rows])=>{
-    let employees = rows;
-    console.table(employees)
-})
-.then(()=> startProgram())
-}
+async function viewRoles(){
+    const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
+    const [rows, fields] = await connection.execute ('select * from roles;');
 
-function viewDepartments(){
-    db.findAllDepartments()
-    .then(([rows])=>{
-        let departments = rows;
-        console.table(departments)
-    })
-    .then(()=> startProgram())
-}
-function viewDepartments(){
-    db.findAllDepartments()
-    .then(([rows])=>{
-        let departments = rows;
-        console.table(departments)
-    })
-    .then(()=> startProgram())
-}
-function viewDepartments(){
-    db.findAllDepartments()
-    .then(([rows])=>{
-        let departments = rows;
-        console.table(departments)
-    })
-    .then(()=> startProgram())
-}
+        console.table(rows);
+
+    }
+    //startProgram()
+
+async function viewEmployees(){
+    const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
+    const [rows, fields] = await connection.execute ('select * from employee;');
+    
+        console.table(rows);
+    
+    }
+    //startProgram()
+
+
+
+
+
 //finding all departments and mapping over the choices to be shown later as departmentChoices when the questions are prompted
-function addRole(){
-    db.findAllDepartments()
-    .then(([rows])=>{
-        let departments = rows;
-        const departmentChoices = departments.map(({id, name})=>({
-            name: name,
-            value: id
-        }))
+// function addRole(){
+//     db.findAllDepartments()
+//     .then(([rows])=>{
+//         let departments = rows;
+//         const departmentChoices = departments.map(({id, name})=>({
+//             name: name,
+//             value: id
+//         }))
 
-        inquirer.prompt([
-            {
-                name: "title",
-                message: "What is the name of the role?"
-            },
-            {
-                name: "salary",
-                message: "What is the salary of this role?"
-            },
-            {
-                type: "list",
-                name: "department_id",
-                message: "Which department does the role belong to?",
-                choices: departmentChoices
-            }
-        ])
-        .then(role =>{
-            db.createRole(role)
-            .then(()=> startProgram())
-        })
-    })
+//         inquirer.prompt([
+//             {
+//                 name: "title",
+//                 message: "What is the name of the role?"
+//             },
+//             {
+//                 name: "salary",
+//                 message: "What is the salary of this role?"
+//             },
+//             {
+//                 type: "list",
+//                 name: "department_id",
+//                 message: "Which department does the role belong to?",
+//                 choices: departmentChoices
+//             }
+//         ])
+//         .then(role =>{
+//             db.createRole(role)
+//             .then(()=> startProgram())
+//         })
+//     })
 }
 

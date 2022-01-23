@@ -1,10 +1,9 @@
-INSERT INTO department
-    (name)
+INSERT INTO department (name)
 VALUES
     ('Sales'),
     ('Engineering'),
     ('Finance'),
-    ('Marketing')
+    ('Marketing'),
     ('Legal');
 
 INSERT INTO roles   
@@ -16,20 +15,20 @@ VALUES
     ('Social Media Coordinator', 48000, 4),
     ('Accountant', 57500, 3),
     ('Legal Aanalyst', 65000, 5),
-    ('General Counsel, 132000', 5)
-    ('Sales Assistant', 40,000, 1);
+    ('General Counsel', 132000, 5),
+    ('Sales Assistant', 40000, 1);
 
 
 INSERT INTO employee
-    (first_name, last_name, role_id)
+    (first_name, last_name, roles_id)
 VALUES
     ('Dean', 'Winchester', 1),
     ('Bruno', 'Mars', 4),
     ('Dojo', 'Cat', 7),
     ('Kerry', 'Washington', 2),
-    ('KeKe', 'Palmer', 8);
+    ('KeKe', 'Palmer', 8),
     ('Queen', 'Latifah', 5),
-    ('Tim', 'McGraw', 3)
+    ('Tim', 'McGraw', 3);
 
 
 
