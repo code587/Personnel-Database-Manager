@@ -3,6 +3,8 @@ CREATE DATABASE personnel_db;
 
 USE personnel_db;
 
+-- SELECT DATATBASE()
+
 CREATE TABLE department (
   id INT NOT NULL auto_increment primary key,
   name VARCHAR(30) NOT NULL

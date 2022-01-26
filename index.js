@@ -3,18 +3,19 @@ const mysql = require('mysql2/promise');
 const db = require('./db');
 require = ('console.table');
 
+
 startProgram();
 
 async function startProgram() {
-   const {choice} = await inquirer.prompt([{
-        name: 'choice',
+   const {option} = await inquirer.prompt([{
+        name: 'option',
         type: 'list',
         message: 'Hello, what may I help you with?',
         choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Done. Need nothing else.'],
     }])
-    console.log(choice);
+    console.log(option);
 //based on response the appropriate case is fired up so the correct function is called
-    switch (choice) {
+    switch (option) {
         case 'View all departments':
             viewDepartments();
             break;
@@ -51,7 +52,7 @@ async function viewDepartments(){
         console.table(rows);
 
     }
-    //startProgram()
+    startProgram()
 
 async function viewRoles(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
@@ -60,7 +61,7 @@ async function viewRoles(){
         console.table(rows);
 
     }
-    //startProgram()
+    startProgram()
 
 async function viewEmployees(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
@@ -69,42 +70,50 @@ async function viewEmployees(){
         console.table(rows);
     
     }
-    //startProgram()
+    startProgram()
 
 
+async function addDepartment(){
+    const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
+    
+    const newdept = await inquirer.prompt([{
+        name: 'newdept',
+        type: 'input',
+        message: 'What is the new department name?',
+    }])
+    
+    const [rows, fields] = await connection.execute(`INSERT INTO Department (name) VALUES (?)`, [newdept]);
 
-
-
-//finding all departments and mapping over the choices to be shown later as departmentChoices when the questions are prompted
-// function addRole(){
-//     db.findAllDepartments()
-//     .then(([rows])=>{
-//         let departments = rows;
-//         const departmentChoices = departments.map(({id, name})=>({
-//             name: name,
-//             value: id
-//         }))
-
-//         inquirer.prompt([
-//             {
-//                 name: "title",
-//                 message: "What is the name of the role?"
-//             },
-//             {
-//                 name: "salary",
-//                 message: "What is the salary of this role?"
-//             },
-//             {
-//                 type: "list",
-//                 name: "department_id",
-//                 message: "Which department does the role belong to?",
-//                 choices: departmentChoices
-//             }
-//         ])
-//         .then(role =>{
-//             db.createRole(role)
-//             .then(()=> startProgram())
-//         })
-//     })
+    console.table(rows);
 }
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//('select * from department;');
+
+    // console.table(rows);
+// console.log(answers);
+// const [rows] = db
+// .execute (`INSERT INTO department (name) VALUES (?);`,answers)
+
+//     .then((answers => {
+    
+//         const connection = mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
+//         const [rows, fields] = connection.execute (`INSERT INTO department (name) VALUES ${answers.department.name};`)
+//     }
+//     ))
+        
+//         console.log(answers);
+// 
