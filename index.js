@@ -28,21 +28,21 @@ async function startProgram() {
         case 'Add a department':
             addDepartment();
             break;
-        // case 'Add a role':
-        //     addRole();
-        //     break;
-    //     case 'Add an employee':
-    //         addEmployee();
-    //         break;
-    //     case 'Update an employee role':
-    //         updateRole();
-    //         break;
-    //     case 'Done. Need nothing else.':
-    //         Finished();
-    //         break;
-    //     default:
-    //         break;
-    // }
+        case 'Add a role':
+            addRole();
+            break;
+        case 'Add an employee':
+            addEmployee();
+            break;
+        case 'Update an employee role':
+            updateRole();
+            break;
+        case 'Done. Need nothing else.':
+            Finished();
+            break;
+        default:
+            break;
+    }
 }
 //appropriate function called based on the case fired up from the responses
 async function viewDepartments(){
@@ -51,8 +51,8 @@ async function viewDepartments(){
 
         console.table(rows);
 
+        startProgram()
     }
-    startProgram()
 
 async function viewRoles(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
@@ -60,8 +60,8 @@ async function viewRoles(){
 
         console.table(rows);
 
+        startProgram()
     }
-    startProgram()
 
 async function viewEmployees(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
@@ -69,23 +69,27 @@ async function viewEmployees(){
     
         console.table(rows);
     
+        startProgram()
     }
-    startProgram()
 
 
 async function addDepartment(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
     
-    const newdept = await inquirer.prompt([{
-        name: 'newdept',
+    const newDept = await inquirer.prompt([
+        {
+        name: 'department',
         type: 'input',
         message: 'What is the new department name?',
     }])
     
-    const [rows, fields] = await connection.execute(`INSERT INTO Department (name) VALUES (?)`, [newdept]);
+    console.log(newDept)
+    let department = newDept.department    
+    console.log(department);
 
-    console.table(rows);
-}
+    const [rows, fields] = await connection.execute(`INSERT INTO Department (name) VALUES (?);`, [department]);
+    
+    viewDepartments();
 
 }
 
