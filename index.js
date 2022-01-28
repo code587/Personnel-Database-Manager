@@ -124,6 +124,44 @@ async function addRole(){
 
 }
 
+async function addEmployee(){
+    const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
+    
+    const newEmployee = await inquirer.prompt([
+        {
+        name: 'first_name',
+        type: 'input',
+        message: 'What is the first name of new employee?',
+    },
+    {
+        name: 'last_name',
+        type: 'input',
+        message: 'What is the last name of the new employee?',
+    },
+    {
+        name: 'roles_id',
+        type: 'input',
+        message: 'What is the new employee role using id 1-8?',
+    },
+    {
+        name: 'manager_id',
+        type: 'input',
+        message: 'Which manager_id from 200-207 is the new employee manager?',
+    }])
+
+    console.log(newEmployee)
+    let first_name = newEmployee.first_name
+    let last_name = newEmployee.last_name
+    let roles_id = newEmployee.roles_id
+    let manager_id = newEmployee.manager_id
+    console.log(first_name, last_name, roles_id, manager_id);
+
+    const [rows, fields] = await connection.execute(`INSERT INTO Employee (first_name, last_name, roles_id, manager_id) VALUES (?,?,?,?);`, [first_name, last_name, roles_id, manager_id]);
+    
+    viewEmployees();
+
+}
+
 
 
 

@@ -20,15 +20,15 @@ VALUES
 
 
 INSERT INTO employee
-    (first_name, last_name, roles_id)
+    (first_name, last_name, roles_id, manager_id)
 VALUES
-    ('Dean', 'Winchester', 1),
-    ('Bruno', 'Mars', 4),
-    ('Dojo', 'Cat', 7),
-    ('Kerry', 'Washington', 2),
-    ('KeKe', 'Palmer', 8),
-    ('Queen', 'Latifah', 5),
-    ('Tim', 'McGraw', 3);
+    ('Dean', 'Winchester', 1, 200),
+    ('Bruno', 'Mars', 4, 201),
+    ('Dojo', 'Cat', 7, 203),
+    ('Kerry', 'Washington', 2, 204),
+    ('KeKe', 'Palmer', 8, 205),
+    ('Queen', 'Latifah', 5, 206),
+    ('Tim', 'McGraw', 3, 207);
 
 
 
