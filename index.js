@@ -90,9 +90,39 @@ async function addDepartment(){
     const [rows, fields] = await connection.execute(`INSERT INTO Department (name) VALUES (?);`, [department]);
     
     viewDepartments();
-
 }
 
+async function addRole(){
+    const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
+    
+    const newRole = await inquirer.prompt([
+        {
+        name: 'title',
+        type: 'input',
+        message: 'What is the new role?',
+    },
+    {
+        name: 'salary',
+        type: 'input',
+        message: 'What is the salary for the new role?',
+    },
+    {
+        name: 'department_id',
+        type: 'input',
+        message: 'What is the department ID for the new role?',
+    }])
+
+    console.log(newRole)
+    let title = newRole.title
+    let salary = newRole.salary
+    let department_id = newRole.department_id
+    console.log(title, salary, department_id);
+
+    const [rows, fields] = await connection.execute(`INSERT INTO Roles (title, salary, department_id) VALUES (?,?,?);`, [title, salary, department_id]);
+    
+    viewRoles();
+
+}
 
 
 
