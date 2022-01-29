@@ -165,40 +165,35 @@ async function addEmployee(){
 async function updateRole(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
 
-const [rows, fields] = await connection.execute('SELECT * from EMPLOYEE');
+const [data] = await connection.execute('SELECT * from employee');
 
-   const employeeOptions = rows.map(employee => ({name: employee.first_name, value: employee.last_name}))
+   const employeeOptions = data.map(employee => ({name: `${employee.first_name} ${employee.last_name}`, value: employee.roles_id,}));
 
-        console.table(rows);
+        console.table(data);
 
     const updateRole = await inquirer.prompt([
         {
-        name: 'last_name',
+        name: 'employee',
         type: 'list',
         message: 'Who is the employee changing roles?',
         choices: employeeOptions,
-    }
-])
-    // {
-    //     name: 'last_name',
-    //     type: 'input',
-    //     message: 'What is the last name of the employee?',
-    // },
-    // {
-    //     name: 'roles_id',
-    //     type: 'input',
-    //     message: 'What is the new role using id 1-8?',
-    // }])
+    },
+    {
+        name: 'roles_id',
+        type: 'input',
+        message: 'What is the new role?',
+    }])
 
-    // console.log(updateRole)
-    // let first_name = updateRole.first_name
-    // let last_name = updateRole.last_name
-    // let roles_id = updateRole.roles_id
-    // console.log(first_name, last_name, roles_id);
+    console.log(updateRole)
+    let employee = updateRole.employee
+    let roles_id = updateRole.roles_id
+    console.log(employee, roles_id);
 
-    // const [rows, fields] = await connection.execute(`INSERT INTO Employee (first_name, last_name, roles_id) VALUES (?,?,?);`, [first_name, last_name, roles_id]);
-    
-    // viewEmployees();
+    const [rows, fields] = await connection.execute(`INSERT INTO employee (first_name, last_name, roles_id) VALUES (?,?,?);`, [first_name, last_name, roles_id]);
+
+    console.table(rows);
+
+    viewEmployees();
 
 }
 
@@ -211,19 +206,3 @@ const [rows, fields] = await connection.execute('SELECT * from EMPLOYEE');
 
 
 
-//('select * from department;');
-
-    // console.table(rows);
-// console.log(answers);
-// const [rows] = db
-// .execute (`INSERT INTO department (name) VALUES (?);`,answers)
-
-//     .then((answers => {
-    
-//         const connection = mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
-//         const [rows, fields] = connection.execute (`INSERT INTO department (name) VALUES ${answers.department.name};`)
-//     }
-//     ))
-        
-//         console.log(answers);
-// 
