@@ -162,7 +162,45 @@ async function addEmployee(){
 
 }
 
+async function updateRole(){
+    const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
 
+const [rows, fields] = await connection.execute('SELECT * from EMPLOYEE');
+
+   const employeeOptions = rows.map(employee => ({name: employee.first_name, value: employee.last_name}))
+
+        console.table(rows);
+
+    const updateRole = await inquirer.prompt([
+        {
+        name: 'last_name',
+        type: 'list',
+        message: 'Who is the employee changing roles?',
+        choices: employeeOptions,
+    }
+])
+    // {
+    //     name: 'last_name',
+    //     type: 'input',
+    //     message: 'What is the last name of the employee?',
+    // },
+    // {
+    //     name: 'roles_id',
+    //     type: 'input',
+    //     message: 'What is the new role using id 1-8?',
+    // }])
+
+    // console.log(updateRole)
+    // let first_name = updateRole.first_name
+    // let last_name = updateRole.last_name
+    // let roles_id = updateRole.roles_id
+    // console.log(first_name, last_name, roles_id);
+
+    // const [rows, fields] = await connection.execute(`INSERT INTO Employee (first_name, last_name, roles_id) VALUES (?,?,?);`, [first_name, last_name, roles_id]);
+    
+    // viewEmployees();
+
+}
 
 
 
