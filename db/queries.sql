@@ -4,9 +4,18 @@ SELECT * from roles;
    
 SELECT * from employee;
 
-INSERT INTO roles (salary);
+SELECT role.id, role.title, department.name AS department
 
-INSERT INTO employee (salary);
+
+-- insert into roles
+--           (title, salary, department_id, department_name)
+-- values
+--           ('sales manager', 90000, 1, 'sales')
+-- INSERT INTO roles (salary);
+
+-- SELECT department.name, roles.salary
+-- FROM deparemnt, roles
+-- JOIN employee;
 
 
     
