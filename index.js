@@ -10,7 +10,7 @@ async function startProgram() {
    const {option} = await inquirer.prompt([{
         name: 'option',
         type: 'list',
-        message: 'Hello, what may I help you with?',
+        message: 'What may I help you with?',
         choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Done. Need nothing else.'],
     }])
     console.log(option);
@@ -88,8 +88,10 @@ async function addDepartment(){
     console.log(department);
 
     const [rows, fields] = await connection.execute(`INSERT INTO Department (name) VALUES (?);`, [department]);
-    
-    viewDepartments();
+
+    console.log('New department added');
+
+    startProgram()
 }
 
 async function addRole(){
@@ -108,19 +110,22 @@ async function addRole(){
     },
     {
         name: 'department_id',
-        type: 'input',
-        message: 'What is the department ID for the new role?',
+        type: 'list',
+        message: 'What is the department for the new role?',
+        choices: ['Sales', 'Engineering', 'Finance', 'Marketing', 'Legal']
     }])
 
     console.log(newRole)
     let title = newRole.title
     let salary = newRole.salary
-    let department_id = newRole.department_id
-    console.log(title, salary, department_id);
+    let department_id = newRole.department_id;
+    console.log(title, salary, department_id,);
 
-    const [rows, fields] = await connection.execute(`INSERT INTO Roles (title, salary, department_id) VALUES (?,?,?);`, [title, salary, department_id]);
+    const [rows, fields] = await connection.execute(`INSERT INTO Roles (title, salary, department) VALUES (?,?,?);`, [title, salary, department]);
     
-    viewRoles();
+    console.table(rows);
+    
+    startProgram()
 
 }
 
@@ -140,8 +145,9 @@ async function addEmployee(){
     },
     {
         name: 'roles_id',
-        type: 'input',
-        message: 'What is the new employee role using id 1-8?',
+        type: 'list',
+        message: 'What is the new employee role ?',
+        choices: ['Sales Manager', 'Jr Software Engineer', 'Controller', 'Social Media Coordinator', 'Legal Aanalyst']
     },
     {
         name: 'manager_id',
@@ -152,13 +158,16 @@ async function addEmployee(){
     console.log(newEmployee)
     let first_name = newEmployee.first_name
     let last_name = newEmployee.last_name
-    let roles_id = newEmployee.roles_id
+    let title = newEmployee.title
     let manager_id = newEmployee.manager_id
-    console.log(first_name, last_name, roles_id, manager_id);
+    console.log(first_name, last_name, title, manager_id);
 
-    const [rows, fields] = await connection.execute(`INSERT INTO Employee (first_name, last_name, roles_id, manager_id) VALUES (?,?,?,?);`, [first_name, last_name, roles_id, manager_id]);
+    const [rows, fields] = await connection.execute(`INSERT INTO Employee (first_name, last_name, title, manager_id) VALUES (?,?,?,?);`, [first_name, last_name, title, manager_id]);
+    
+    console.table(rows);
     
     viewEmployees();
+    
 
 }
 
@@ -173,7 +182,7 @@ const [data] = await connection.execute('SELECT * from employee');
 
     const updateRole = await inquirer.prompt([
         {
-        name: 'employee',
+        name: 'first_name',
         type: 'list',
         message: 'Who is the employee changing roles?',
         choices: employeeOptions,
@@ -185,15 +194,15 @@ const [data] = await connection.execute('SELECT * from employee');
     }])
 
     console.log(updateRole)
-    let employee = updateRole.employee
+    let first_name = updateRole.first_name
     let roles_id = updateRole.roles_id
-    console.log(employee, roles_id);
+    console.log(first_name, roles_id);
 
     const [rows, fields] = await connection.execute(`INSERT INTO employee (first_name, last_name, roles_id) VALUES (?,?,?);`, [first_name, last_name, roles_id]);
 
     console.table(rows);
 
-    viewEmployees();
+    startProgram()
 
 }
 

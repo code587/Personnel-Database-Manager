@@ -1,10 +1,16 @@
-SELECT * from department;
+-- SELECT * from department;
    
-SELECT * from roles;
+-- SELECT * from roles;
    
-SELECT * from employee;
+-- SELECT * from employee;
 
-SELECT role.id, role.title, department.name AS department
+-- SELECT *
+-- FROM department
+-- JOIN 
+
+-- INSERT INTO roles (department_name AS department);
+
+-- SELECT roles.id, roles.title, department.name AS department
 
 
 -- insert into roles
@@ -13,9 +19,7 @@ SELECT role.id, role.title, department.name AS department
 --           ('sales manager', 90000, 1, 'sales')
 -- INSERT INTO roles (salary);
 
--- SELECT department.name, roles.salary
--- FROM deparemnt, roles
--- JOIN employee;
+
 
 
     

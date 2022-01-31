@@ -13,22 +13,18 @@ VALUES
     ('Jr Software Engineer', 61000, 2),
     ('Controller', 110000, 3),
     ('Social Media Coordinator', 48000, 4),
-    ('Accountant', 57500, 3),
-    ('Legal Aanalyst', 65000, 5),
-    ('General Counsel', 132000, 5),
-    ('Sales Assistant', 40000, 1);
+    ('Legal Analyst', 65000, 5);
 
 
 INSERT INTO employee
     (first_name, last_name, roles_id, manager_id)
 VALUES
-    ('Dean', 'Winchester', 1, 200),
-    ('Bruno', 'Mars', 4, 201),
-    ('Dojo', 'Cat', 7, 203),
-    ('Kerry', 'Washington', 2, 204),
-    ('KeKe', 'Palmer', 8, 205),
-    ('Queen', 'Latifah', 5, 206),
-    ('Tim', 'McGraw', 3, 207);
+    ('Dean', 'Winchester', 1, 201),
+    ('Bruno', 'Mars', 2, 202),
+    ('Dojo', 'Cat', 3, 203),
+    ('Kerry', 'Washington', 4, 204),
+    ('KeKe', 'Palmer', 5, 205);
+
 
 
 
