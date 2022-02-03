@@ -37,9 +37,6 @@ async function startProgram() {
         case 'Update an employee role':
             updateRole();
             break;
-        case 'Done. Need nothing else.':
-            Finished();
-            break;
         default:
             break;
     }
@@ -75,23 +72,23 @@ async function viewEmployees(){
 
 async function addDepartment(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
+
+    const [rows, fields] = await connection.execute('SELECT * FROM department');
     
+    console.table(rows);
+
+    const [departments] = await connection.query('SELECT * FROM department');
+
+    const [roles] = await connection.query('SELECT * FROM roles');
+
     const newDept = await inquirer.prompt([
         {
         name: 'department',
         type: 'input',
         message: 'What is the new department name?',
     }])
+
     
-    console.log(newDept)
-    let department = newDept.department  
-    let department_name = newDept.department_name  
-    console.log(department);
-
-    const [rows, fields] = await connection.execute(`INSERT INTO Department (department_name) VALUES (?);`, [department]);
-
-    console.table(rows);
-
     startProgram()
 }
 
@@ -99,6 +96,8 @@ async function addRole(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
 
     const [rows, fields] = await connection.execute('SELECT * FROM roles');
+
+    console.table(rows);
 
     const [roles] = await connection.query('SELECT * FROM roles');
 
@@ -126,17 +125,6 @@ async function addRole(){
 
     console.log(roleAdd)
 
-    // console.log(newRole)
-    // let title = newRole.title
-    // let salary = newRole.salary
-    // let department_id = newRole.department_id;
-    // let department_name = newRole.department_name
-    // console.log(title, salary, department_id, department_name);
-
-    // const [rows, fields] = await connection.execute(`INSERT INTO Roles (title, salary, department_id, department_name) VALUES (?,?,?,?);`, [title, salary, department_id, department_name]);
-    
-    // console.table(rows);
-    
     startProgram()
 
 }
@@ -145,8 +133,6 @@ async function addEmployee(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
     
     const [roles] = await connection.query('SELECT id, title FROM roles')
-
-    // console.log(roles);
 
     const [managers] = await connection.query('SELECT id, first_name, last_name FROM employee')
 
@@ -183,9 +169,7 @@ async function addEmployee(){
 
     const [rows, fields] = await connection.execute(`INSERT INTO Employee (first_name, last_name, roles_id, manager_id) VALUES (?,?,?,?);`, [first_name, last_name, role_id, manager_id]);
 
-    
     viewEmployees();
-    
 
 }
 
@@ -225,15 +209,4 @@ async function updateRole(){
         console.log(pick);
 
     startProgram()
-
 }
-
-
-
-
-
-
-
-
-
-
