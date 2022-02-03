@@ -5,7 +5,7 @@ require = ('console.table');
 
 
 startProgram();
-
+// fires up the inquirer prompt questions
 async function startProgram() {
    const {option} = await inquirer.prompt([{
         name: 'option',
@@ -14,7 +14,7 @@ async function startProgram() {
         choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Done. Need nothing else.'],
     }])
     console.log(option);
-//based on response the appropriate case is fired up so the correct function is called
+//based on response the appropriate case/function is called
     switch (option) {
         case 'View all departments':
             viewDepartments();
@@ -41,7 +41,7 @@ async function startProgram() {
             break;
     }
 }
-//appropriate function called based on the case fired up from the responses
+// view all departments
 async function viewDepartments(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
     const [rows, fields] = await connection.execute ('select * from department;');
@@ -50,7 +50,7 @@ async function viewDepartments(){
 
         startProgram()
     }
-
+//  view all roles and using console module, console table
 async function viewRoles(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
     const [rows, fields] = await connection.execute ('select * from roles;');
@@ -59,7 +59,7 @@ async function viewRoles(){
 
         startProgram()
     }
-
+//view all employees once shown the beginning prompt questions display
 async function viewEmployees(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
     const [rows, fields] = await connection.execute ('select * from employee;');
@@ -69,7 +69,7 @@ async function viewEmployees(){
         startProgram()
     }
 
-
+//add a department. queried for departments and roles
 async function addDepartment(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
 
@@ -88,10 +88,11 @@ async function addDepartment(){
         message: 'What is the new department name?',
     }])
 
+    console.log(newDept);
     
     startProgram()
 }
-
+//add a role. queried for roles and departments
 async function addRole(){
     const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'personnel_db'});
 
@@ -117,6 +118,7 @@ async function addRole(){
         message: 'What is the salary for the new role?',
     },
     {
+    //mapping over departments to provide a list of current departments to choose from
         name: 'department',
         type: 'list',
         message: 'What is the department for the new role?',
@@ -148,6 +150,7 @@ async function addEmployee(){
         message: 'What is the last name of the new employee?',
     },
     {
+        //mapping over roles to provide a list of roles to choose from
         name: 'roles_id',
         type: 'list',
         message: 'What is the new employee role ?',

@@ -1,3 +1,6 @@
+
+-- seed data below to be used for queries
+
 INSERT INTO department (department_name)
 VALUES
     ('Sales'),

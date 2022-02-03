@@ -9,7 +9,7 @@ CREATE TABLE department (
   id INT NOT NULL auto_increment primary key,
   department_name VARCHAR(30) NOT NULL
 );
-
+-- creates the roles table. provides department_id as the foreign key for department. department id has a one to many relationship with the role table
 CREATE TABLE roles (
   id INT NOT NULL auto_increment primary key,
   title VARCHAR(30) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE roles (
   REFERENCES department(id)
   ON DELETE SET NULL
 );
-
+-- creates the employee table. provides roles_id as the foreign key for employee table. role id has a one to many relationship with the employee table
 CREATE TABLE employee (
   id INT NOT NULL auto_increment primary key,
   first_name VARCHAR(30) NOT NULL,
