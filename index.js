@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2/promise');
-const db = require('./db');
+const db = require('.');
 require = ('console.table');
 
 
